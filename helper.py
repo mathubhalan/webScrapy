@@ -43,4 +43,25 @@ class scrap:
         block_df = pd.DataFrame(list(zip(block,link)),
                                 columns=['Block','URL'])
         return block_df
+    
+    def     getTable(self, df): 
+        cols = ['school','href','village','pin_code','cluster','block','district']
+        df_school = pd.DataFrame(columns=cols)
+        for index,row in df.head(n=5).iterrows():
+            req = requests.get(row['URL'], self.headers)
+            soup = BeautifulSoup(req.content, 'html.parser')
+            for r in soup.select('tbody tr'):
+                school_dct = {}
+                data = r.find_all('td')
+                school_dct['school'] = data[0].find('a').text
+                school_dct['href'] = data[0].find('a').get('href')
+                school_dct['village']=data[1].text
+                school_dct['cluster']=data[2].text
+                school_dct['pin_code']=data[3].text
+                school_dct['from_page_url']=row['URL']
+                school_dct['block']=row['Block']
+                school_dct['district']=row['District']
+                df_school=df_school.append(school_dct, ignore_index=True)
+        return df_school
+        
 

@@ -6,7 +6,7 @@ Created on Sat Sep 28 23:02:39 2019
 """
 
 from helper import scrap
-
+import pandas as pd
 url="https://liko.in/districts/tiruchirappalli"
 s =scrap(url)
 
@@ -16,7 +16,15 @@ def FetchBlocks():
     which returns the dataframe 
     '''
     return s.getBlocks()
-
+def read_data(file):
+    df_district = pd.read_excel(file, sheet_name="district")
+    df_block = pd.read_excel(file, sheet_name="block")
+    df_url = pd.read_excel(file, sheet_name="url")
+    
 
 if __name__ == '__main__':
-    df_blocks=FetchBlocks()
+    read_data(".\schoolist.xlsx")
+    #df_blocks=FetchBlocks()
+    
+    
+    
