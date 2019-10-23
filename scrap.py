@@ -100,53 +100,39 @@ for index,row in df_url.head(n=5).iterrows():
         df_school=df_school.append(school_dct, ignore_index=True)
 
 
+   ####get the lat & long
+from geopy.geocoders import Nominatim
+geolocator = Nominatim(user_agent="AIzaSyDe1CVK6TWfZUVkkeGcpvhaW-IJSUUp-lM")
+location = geolocator.geocode("Trichy")
+print((location.latitude, location.longitude))
+location
+new_row = []
+for index,row in df_block.iterrows():
+    location = geolocator.geocode(row["blk_name"])
+    if location is not None:
+        print((location.latitude, location.longitude))
+        df_block.loc[index,'d_lat'] = location.latitude
+        df_block.loc[index,'d_long'] = location.longitude
+                
+    else:  
+        df_block.loc[index,'d_lat'] = 0.00
+        df_block.loc[index,'d_long'] = 0.00
+        continue
+df_block.to_excel("block.xlsx")
     
     
-df_school = 
+        
+df_block.drop(["d_lat","d_long"], axis=1, inplace=True)   
+
 
 
 df_1 =df_1.append(getTable("https://liko.in/blocks/andhanallur-block"), ignore_index=True)
 data1 =pd.DataFrame(lst1)
 
 
-data.append(lst)
+
 
 print(data.head())
 
 
 
-    #school_dct['school'] = 
-   
-    
-    #ow_text = [x.text for x in row.find_all('td')]
-    #print(', '.join(row_text))  # You can save or print this string however you want.
-
-'''
-ul = soup.find('ul', {'class':'double li'})
-#print(table)
-a_href = ul.find_all('a')
-print(a_href)
-link=[]
-block = []
-#block=[]
-for a in a_href:
-    link.append(a.get('href'))
-    block.append(a.text)
-
-block = [w.replace("Schools in ",'') for w in block]
-
-s = "Schools in Trichy"
-a = s.replace("Schools in ",'')
-print (a)
-
-print(df_blocks['URL'])
-
-'''
-'''
-rows = table.findAll('tr')
-for tr in rows:
-    cols = tr.findAll('td')
-    if len(cols) >= 4 and "2013" in cols[3].text:
-        link = cols[1].find('a').get('href')
-        print link
-'''
