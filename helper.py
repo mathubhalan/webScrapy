@@ -44,7 +44,7 @@ class scrap:
                                 columns=['Block','URL'])
         return block_df
     
-    def     getTable(self, df): 
+    def getTable(self, df): 
         cols = ['school','href','village','pin_code','cluster','block','district']
         df_school = pd.DataFrame(columns=cols)
         for index,row in df.head(n=5).iterrows():
