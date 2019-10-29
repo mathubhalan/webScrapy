@@ -83,7 +83,7 @@ df_block = pd.read_excel(".\schoolist.xlsx", sheet_name="block")
 df_url = pd.read_excel(".\schoolist.xlsx", sheet_name="url")
 cols = ['school','href','village','pin_code','cluster','block','district']
 df_school = pd.DataFrame(columns=cols)
-for index,row in df_url.head(n=5).iterrows():
+for index,row in df_url.iterrows():
     req = requests.get(row['URL'], headers)
     soup = BeautifulSoup(req.content, 'html.parser')
     for r in soup.select('tbody tr'):
@@ -118,7 +118,7 @@ for index,row in df_block.iterrows():
         df_block.loc[index,'d_lat'] = 0.00
         df_block.loc[index,'d_long'] = 0.00
         continue
-df_block.to_excel("block.xlsx")
+df_school.to_excel("school.xlsx")
     
     
         
